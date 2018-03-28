@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        analysisFragment = new AnalysisFragment();
         switchToAnalysisFragment();
     }
 
     private void switchToAnalysisFragment() {
-        analysisFragment = new AnalysisFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayout, analysisFragment);
         ft.commit();
