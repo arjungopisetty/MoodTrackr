@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 
 /**
@@ -32,11 +34,13 @@ public class DialogCustomListViewAdapter extends ArrayAdapter<ToneRecord> {
 
     static class ViewHolder {
         TextView theTextView;
+        TextView scoreView;
         ImageView theImageView;
 
         public ViewHolder(View v) {
             theTextView = (TextView) v.findViewById(R.id.dialogRowText);
             theImageView = (ImageView) v.findViewById(R.id.dialogRowPic);
+            scoreView = (TextView) v.findViewById(R.id.dialogRowScore);
         }
     }
 
@@ -58,6 +62,7 @@ public class DialogCustomListViewAdapter extends ArrayAdapter<ToneRecord> {
         }
         ToneRecord record = getItem(position);
         vh.theTextView.setText(record.tone_name);
+        vh.scoreView.setText(String.format("%.2f", record.score));
         vh.theImageView.setImageResource(colorMap.get(record.tone_id));
         return convertView;
     }
