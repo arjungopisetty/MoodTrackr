@@ -60,5 +60,4 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.frameLayout, analysisFragment);
         ft.commit();
     }
-
 }
