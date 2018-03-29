@@ -2,6 +2,7 @@ package cs371m.arjungopisetty.moodtrackr;
 
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -86,8 +87,8 @@ public class AnalysisFragment extends Fragment implements ToneJSON.FetchCallback
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                alertDialog.setTitle("Tones:");
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle("Tones");
                 View innerView = (View) getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
                 alertDialog.setView(innerView);
                 ListView tonesListView = (ListView) innerView.findViewById(R.id.customListView);
@@ -99,6 +100,18 @@ public class AnalysisFragment extends Fragment implements ToneJSON.FetchCallback
                 adapter.add(new ToneRecord());
                 adapter.add(new ToneRecord());
                 tonesListView.setAdapter(adapter);
+                alertDialog.setPositiveButton("Push", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //TODO: Push to firebase here
+                    }
+                });
+                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
                 alertDialog.show();
             }
         });
