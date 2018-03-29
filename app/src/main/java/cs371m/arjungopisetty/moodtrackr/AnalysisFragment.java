@@ -91,8 +91,13 @@ public class AnalysisFragment extends Fragment implements ToneJSON.FetchCallback
                 View innerView = (View) getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
                 alertDialog.setView(innerView);
                 ListView tonesListView = (ListView) innerView.findViewById(R.id.customListView);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, dummydata);
+                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, dummydata);
                 //TextView text = innerView.findViewById(R.id.dial)
+                //tonesListView.setAdapter(adapter);
+                DialogCustomListViewAdapter adapter = new DialogCustomListViewAdapter(getActivity());
+                adapter.add(new ToneRecord());
+                adapter.add(new ToneRecord());
+                adapter.add(new ToneRecord());
                 tonesListView.setAdapter(adapter);
                 alertDialog.show();
             }
