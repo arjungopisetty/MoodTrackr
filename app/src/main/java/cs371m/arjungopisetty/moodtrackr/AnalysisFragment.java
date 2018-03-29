@@ -10,13 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +21,7 @@ import java.util.List;
  * Use the {@link AnalysisFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AnalysisFragment extends Fragment implements ToneJSON.FetchCallback {
+public class AnalysisFragment extends Fragment implements ToneParser.FetchCallback {
 
     private EditText mInputText;
     private Button mAnalyzeButton;
@@ -82,8 +79,10 @@ public class AnalysisFragment extends Fragment implements ToneJSON.FetchCallback
     }
 
     @Override
-    public void onComplete(List<ToneRecord> tones) {
+    public void onComplete(final List<ToneRecord> tones) {
         // TODO: custom dialog here
+        for (ToneRecord t : tones)
+            Log.d(MainActivity.TAG, "ID: " + t.tone_id + " Score: " + t.score);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -96,9 +95,7 @@ public class AnalysisFragment extends Fragment implements ToneJSON.FetchCallback
                 //TextView text = innerView.findViewById(R.id.dial)
                 //tonesListView.setAdapter(adapter);
                 DialogCustomListViewAdapter adapter = new DialogCustomListViewAdapter(getActivity());
-                adapter.add(new ToneRecord());
-                adapter.add(new ToneRecord());
-                adapter.add(new ToneRecord());
+                adapter.addAll(tones);
                 tonesListView.setAdapter(adapter);
                 alertDialog.setPositiveButton("Push", new DialogInterface.OnClickListener() {
                     @Override

@@ -5,6 +5,7 @@ package cs371m.arjungopisetty.moodtrackr;
  */
 
 public class ToneRecord {
-    public String tone;
-    public int confidence;
+    public String tone_name;
+    public String tone_id;
+    public double score;
 }
