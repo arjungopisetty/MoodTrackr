@@ -43,7 +43,7 @@ public class DialogCustomListViewAdapter extends ArrayAdapter<ToneRecord> {
         }
         ToneRecord record = getItem(position);
         vh.theTextView.setText("1");
-        vh.theImageView.setImageResource(R.drawable.ic_dashboard_black_24dp);
+        vh.theImageView.setImageResource(R.drawable.blue_circle);
         return convertView;
     }
 }
