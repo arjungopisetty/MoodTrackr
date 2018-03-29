@@ -9,11 +9,26 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 /**
  * Created by arjungopisetty on 3/29/18.
  */
 
 public class DialogCustomListViewAdapter extends ArrayAdapter<ToneRecord> {
+
+    private static HashMap<String, Integer> colorMap;
+
+    static {
+        colorMap = new HashMap<>();
+        colorMap.put("anger", R.drawable.red_circle);
+        colorMap.put("fear", R.drawable.orange_circle);
+        colorMap.put("joy", R.drawable.yellow_circle);
+        colorMap.put("sadness", R.drawable.green_circle);
+        colorMap.put("analytical", R.drawable.blue_circle);
+        colorMap.put("confident", R.drawable.indigo_circle);
+        colorMap.put("tentative", R.drawable.violet_circle);
+    }
 
     static class ViewHolder {
         TextView theTextView;
@@ -43,7 +58,7 @@ public class DialogCustomListViewAdapter extends ArrayAdapter<ToneRecord> {
         }
         ToneRecord record = getItem(position);
         vh.theTextView.setText("1");
-        vh.theImageView.setImageResource(R.drawable.blue_circle);
+        vh.theImageView.setImageResource(colorMap.get("orange"));
         return convertView;
     }
 }
