@@ -57,8 +57,8 @@ public class DialogCustomListViewAdapter extends ArrayAdapter<ToneRecord> {
             vh = (ViewHolder) convertView.getTag();
         }
         ToneRecord record = getItem(position);
-        vh.theTextView.setText("1");
-        vh.theImageView.setImageResource(colorMap.get("analytical"));
+        vh.theTextView.setText(record.tone_name);
+        vh.theImageView.setImageResource(colorMap.get(record.tone_id));
         return convertView;
     }
 }
