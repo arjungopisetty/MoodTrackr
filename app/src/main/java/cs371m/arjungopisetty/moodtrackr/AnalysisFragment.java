@@ -80,37 +80,43 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchCallba
 
     @Override
     public void onComplete(final List<ToneRecord> tones) {
-        // TODO: custom dialog here
-        for (ToneRecord t : tones)
-            Log.d(MainActivity.TAG, "ID: " + t.tone_id + " Score: " + t.score);
+        // Create and display custom dialog
+//        for (ToneRecord t : tones)
+//            Log.d(MainActivity.TAG, "ID: " + t.tone_id + " Score: " + t.score);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Tones");
+        View innerView = (View) getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
+        alertDialog.setView(innerView);
+        ListView tonesListView = (ListView) innerView.findViewById(R.id.customListView);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, dummydata);
+        //TextView text = innerView.findViewById(R.id.dial)
+        //tonesListView.setAdapter(adapter);
+        DialogCustomListViewAdapter adapter = new DialogCustomListViewAdapter(getActivity());
+        adapter.addAll(tones);
+        tonesListView.setAdapter(adapter);
+        alertDialog.setPositiveButton("Push", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //TODO: Push to firebase here
+                pushToFirebase(tones);
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                alertDialog.setTitle("Tones");
-                View innerView = (View) getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
-                alertDialog.setView(innerView);
-                ListView tonesListView = (ListView) innerView.findViewById(R.id.customListView);
-                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, dummydata);
-                //TextView text = innerView.findViewById(R.id.dial)
-                //tonesListView.setAdapter(adapter);
-                DialogCustomListViewAdapter adapter = new DialogCustomListViewAdapter(getActivity());
-                adapter.addAll(tones);
-                tonesListView.setAdapter(adapter);
-                alertDialog.setPositiveButton("Push", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //TODO: Push to firebase here
-                    }
-                });
-                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
                 alertDialog.show();
             }
         });
+    }
+
+    private void pushToFirebase(List<ToneRecord> tones) {
+
     }
 }
