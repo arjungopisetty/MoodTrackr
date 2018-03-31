@@ -14,10 +14,20 @@
 
     <TextView
         android:id="@+id/dialogRowText"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textColor="#000000"
+        android:layout_marginLeft="20dp"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/dialogRowScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:textColor="#000000"
-        android:textSize="30sp" />
+        android:layout_marginLeft="60dp"
+        android:textSize="24sp" />
 
 </LinearLayout>
