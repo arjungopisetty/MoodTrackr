@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -117,6 +124,13 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchCallba
     }
 
     private void pushToFirebase(List<ToneRecord> tones) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
 
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+        database.child("users").child(currentUser.getUid()).push().setValue(tones);
+
+        Toast.makeText(getContext(), "Pushed to Firebase DB", Toast.LENGTH_SHORT).show();
     }
 }
