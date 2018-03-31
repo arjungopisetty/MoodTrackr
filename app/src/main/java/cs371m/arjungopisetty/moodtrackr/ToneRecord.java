@@ -12,10 +12,10 @@ public class ToneRecord {
     public double score;
 
     public ToneRecord() {}
-
-    public ToneRecord(String tone_name, String tone_id, double score) {
-        this.tone_name = tone_name;
-        this.tone_id = tone_id;
-        this.score = score;
-    }
+//
+//    public ToneRecord(String tone_name, String tone_id, double score) {
+//        this.tone_name = tone_name;
+//        this.tone_id = tone_id;
+//        this.score = score;
+//    }
 }

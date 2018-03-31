@@ -35,6 +35,10 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchCallba
 
     private WatsonAnalyzer analyzer;
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private DatabaseReference mDatabase;
+
     private String[] dummydata = {"1", "2", "3", "4"};
 
 
@@ -83,6 +87,10 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchCallba
                 analyzer.analyzeText(input);
             }
         });
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -124,12 +132,11 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchCallba
     }
 
     private void pushToFirebase(List<ToneRecord> tones) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
+        TimedToneRecord pushRecord = new TimedToneRecord();
+        pushRecord.tones = tones;
+        pushRecord.time = new Long(System.currentTimeMillis());
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-
-        database.child("users").child(currentUser.getUid()).push().setValue(tones);
+        mDatabase.child("users").child(mUser.getUid()).push().setValue(pushRecord);
 
         Toast.makeText(getContext(), "Pushed to Firebase DB", Toast.LENGTH_SHORT).show();
     }
