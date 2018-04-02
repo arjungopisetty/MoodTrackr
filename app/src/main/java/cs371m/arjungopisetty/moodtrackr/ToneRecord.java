@@ -18,4 +18,14 @@ public class ToneRecord {
 //        this.tone_id = tone_id;
 //        this.score = score;
 //    }
+
+
+    @Override
+    public String toString() {
+        return "ToneRecord{" +
+                "tone_name='" + tone_name + '\'' +
+                ", tone_id='" + tone_id + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }

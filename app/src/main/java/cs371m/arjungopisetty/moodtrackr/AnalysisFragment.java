@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +27,7 @@ import java.util.List;
  * Use the {@link AnalysisFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AnalysisFragment extends Fragment implements ToneParser.FetchCallback {
+public class AnalysisFragment extends Fragment implements ToneParser.FetchTonesCallback {
 
     private EditText mInputText;
     private Button mAnalyzeButton;

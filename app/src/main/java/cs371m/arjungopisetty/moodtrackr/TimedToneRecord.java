@@ -11,4 +11,12 @@ public class TimedToneRecord {
     public Long time;
 
     public TimedToneRecord() {}
+
+    @Override
+    public String toString() {
+        return "TimedToneRecord{" +
+                "tones=" + tones +
+                ", time=" + time +
+                '}';
+    }
 }
