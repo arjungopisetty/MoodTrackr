@@ -11,6 +11,7 @@ import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneScore;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,12 @@ import java.util.List;
 
 public class ToneParser {
 
-    public interface FetchCallback {
+    public interface FetchTonesCallback {
         void onComplete(List<ToneRecord> tones);
+    }
+
+    public interface FetchFirebaseCallback {
+        void onComplete(List<TimedToneRecord> records);
     }
 
     public static List<ToneRecord> analysisToToneRecords(ToneAnalysis analysis) {

@@ -23,12 +23,12 @@ public class WatsonAnalyzer {
     private final String username = "625febec-1179-44c4-ae7a-d8672ffdbb48";
     private final String password = "qSP8fESIvAkO";
 
-    private ToneParser.FetchCallback fetchCallback;
+    private ToneParser.FetchTonesCallback fetchTonesCallback;
 
     private Map headers;
 
-    public WatsonAnalyzer(ToneParser.FetchCallback callback) {
-        fetchCallback = callback;
+    public WatsonAnalyzer(ToneParser.FetchTonesCallback callback) {
+        fetchTonesCallback = callback;
         headers = new HashMap<String, String>();
         headers.put("X-Watson-Learning-Opt-Out", "true");
     }
@@ -47,7 +47,7 @@ public class WatsonAnalyzer {
             @Override public void onResponse(ToneAnalysis tone) {
                 //System.out.println(tone);
                 List<ToneRecord> records = ToneParser.analysisToToneRecords(tone);
-                fetchCallback.onComplete(records);
+                fetchTonesCallback.onComplete(records);
             }
 
             @Override public void onFailure(Exception e) {

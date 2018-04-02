@@ -13,6 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -21,12 +27,16 @@ import java.util.List;
  * Use the {@link AnalysisFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AnalysisFragment extends Fragment implements ToneParser.FetchCallback {
+public class AnalysisFragment extends Fragment implements ToneParser.FetchTonesCallback {
 
     private EditText mInputText;
     private Button mAnalyzeButton;
 
     private WatsonAnalyzer analyzer;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private DatabaseReference mDatabase;
 
     private String[] dummydata = {"1", "2", "3", "4"};
 
@@ -76,6 +86,10 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchCallba
                 analyzer.analyzeText(input);
             }
         });
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -83,10 +97,10 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchCallba
         // Create and display custom dialog
 //        for (ToneRecord t : tones)
 //            Log.d(MainActivity.TAG, "ID: " + t.tone_id + " Score: " + t.score);
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        alertDialog.setTitle("Tones");
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Tones");
         View innerView = (View) getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
-        alertDialog.setView(innerView);
+        builder.setView(innerView);
         ListView tonesListView = (ListView) innerView.findViewById(R.id.customListView);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, dummydata);
         //TextView text = innerView.findViewById(R.id.dial)
@@ -94,29 +108,35 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchCallba
         DialogCustomListViewAdapter adapter = new DialogCustomListViewAdapter(getActivity());
         adapter.addAll(tones);
         tonesListView.setAdapter(adapter);
-        alertDialog.setPositiveButton("Push", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Push", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //TODO: Push to firebase here
                 pushToFirebase(tones);
             }
         });
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
             }
         });
-
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                alertDialog.show();
+                AlertDialog dialogAlert = builder.create();
+                dialogAlert.show();
             }
         });
     }
 
     private void pushToFirebase(List<ToneRecord> tones) {
+        TimedToneRecord pushRecord = new TimedToneRecord();
+        pushRecord.tones = tones;
+        pushRecord.time = new Long(System.currentTimeMillis());
 
+        mDatabase.child("users").child(mUser.getUid()).push().setValue(pushRecord);
+
+        Toast.makeText(getContext(), "Pushed to Firebase DB", Toast.LENGTH_SHORT).show();
     }
 }

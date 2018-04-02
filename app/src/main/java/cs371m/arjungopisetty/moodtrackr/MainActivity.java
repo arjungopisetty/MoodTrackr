@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     private Fragment analysisFragment;
+    private Fragment graphFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard:
                     // TODO: Graph fragment
-
+                    switchToGraphFragment();
                     return true;
                 case R.id.navigation_notifications:
                     // TODO: Insights fragment
@@ -51,13 +52,21 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        analysisFragment = new AnalysisFragment();
+        analysisFragment = AnalysisFragment.newInstance();
+        graphFragment = GraphFragment.newInstance();
+
         switchToAnalysisFragment();
     }
 
     private void switchToAnalysisFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayout, analysisFragment);
+        ft.commit();
+    }
+
+    private void switchToGraphFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayout, graphFragment);
         ft.commit();
     }
 }
