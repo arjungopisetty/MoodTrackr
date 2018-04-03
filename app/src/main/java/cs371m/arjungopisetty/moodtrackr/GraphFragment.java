@@ -1,6 +1,6 @@
 package cs371m.arjungopisetty.moodtrackr;
 
-
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,8 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +32,8 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
 
     private View mRootView;
     private Button mFetchButton;
+
+    private PieChart mChart;
 
     public GraphFragment() {
         // Required empty public constructor
@@ -55,6 +63,18 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
         super.onActivityCreated(savedInstanceState);
         mFetchButton = (Button) mRootView.findViewById(R.id.fetchButton);
 
+        mChart = (PieChart) mRootView.findViewById(R.id.pieChart);
+        mChart.setUsePercentValues(true);
+        mChart.getDescription().setEnabled(false);
+        mChart.setCenterText("Moods");
+        mChart.setDrawHoleEnabled(true);
+        mChart.setHoleColor(Color.WHITE);
+        mChart.setTransparentCircleColor(Color.WHITE);
+        mChart.setTransparentCircleAlpha(110);
+        mChart.setHoleRadius(58f);
+        mChart.setTransparentCircleRadius(61f);
+        mChart.setDrawCenterText(true);
+
         mReader = new FirebaseReader(this);
 
         mFetchButton.setOnClickListener(new View.OnClickListener() {
@@ -70,5 +90,19 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
         // TODO: Put into graph
         for (TimedToneRecord record : records)
             Log.d(MainActivity.TAG, record.toString());
+
+        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+        for (int i = 0; i < records.size(); i++) {
+            for (int j = 0; j < records.get(i).tones.size(); j++) {
+                entries.add(new PieEntry((float) ((Math.random() * 10) + 10 / 5),
+                        records.get(i % records.size()).tones.get(j)));
+            }
+        }
+
+        PieDataSet dataSet = new PieDataSet(entries, "Tone Results");
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        PieData data = new PieData(dataSet);
+        mChart.setData(data);
+        mChart.invalidate();
     }
 }
