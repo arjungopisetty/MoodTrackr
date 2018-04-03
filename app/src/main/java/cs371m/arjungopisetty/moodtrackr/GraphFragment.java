@@ -14,11 +14,15 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -86,22 +90,33 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
     }
 
     @Override
-    public void onComplete(List<TimedToneRecord> records) {
-        // TODO: Put into graph
-        for (TimedToneRecord record : records)
-            Log.d(MainActivity.TAG, record.toString());
-
-        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-        for (int i = 0; i < records.size(); i++) {
-            for (int j = 0; j < records.get(i).tones.size(); j++) {
-                entries.add(new PieEntry((float) ((Math.random() * 10) + 10 / 5),
-                        records.get(i % records.size()).tones.get(j)));
-            }
+    public void onComplete(HashMap<String, Double> graphData) {
+        Iterator iterator = graphData.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry pair = (Map.Entry) iterator.next();
+            Log.d(MainActivity.TAG, pair.getKey() + " = " + pair.getValue());
+            iterator.remove();
         }
 
-        PieDataSet dataSet = new PieDataSet(entries, "Tone Results");
+//        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+//        for (int i = 0; i < records.size(); i++) {
+//            for (int j = 0; j < records.get(i).tones.size(); j++) {
+//                entries.add(new PieEntry((float) ((Math.random() * 10) + 10 / 5),
+//                        records.get(i % records.size()).tones.get(j).tone_name));
+//            }
+//        }
+        List<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(18.5f, "Green"));
+        entries.add(new PieEntry(26.7f, "Yellow"));
+        entries.add(new PieEntry(24.0f, "Red"));
+        entries.add(new PieEntry(30.8f, "Blue"));
+
+        PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.WHITE);
         mChart.setData(data);
         mChart.invalidate();
     }

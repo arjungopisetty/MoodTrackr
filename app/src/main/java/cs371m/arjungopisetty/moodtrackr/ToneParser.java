@@ -13,6 +13,7 @@ import org.w3c.dom.Document;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class ToneParser {
     }
 
     public interface FetchFirebaseCallback {
-        void onComplete(List<TimedToneRecord> records);
+        void onComplete(HashMap<String, Double> graphData);
     }
 
     public static List<ToneRecord> analysisToToneRecords(ToneAnalysis analysis) {
