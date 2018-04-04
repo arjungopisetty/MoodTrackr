@@ -2,10 +2,10 @@ package cs371m.arjungopisetty.moodtrackr;
 
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,7 +99,7 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchTonesC
 //            Log.d(MainActivity.TAG, "ID: " + t.tone_id + " Score: " + t.score);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Tones");
-        View innerView = (View) getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
+        View innerView = (View) getActivity().getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
         builder.setView(innerView);
         ListView tonesListView = (ListView) innerView.findViewById(R.id.customListView);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, dummydata);

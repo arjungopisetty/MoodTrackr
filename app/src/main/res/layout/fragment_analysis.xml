@@ -13,9 +13,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:gravity="top|left"
         android:ems="10"
         android:inputType="textMultiLine"
-        android:text="That leads me to a bigger and more important reason for these changes. I believe in the Cuban people. This is not just a policy of normalizing relations with the Cuban government. The United States of America is normalizing relations with the Cuban people. And today I want to share with you my vision of what our future can be I want the human people especially the young people to understand why I believe that you should look to the future with hope not the false promise which insists that things are better than they really are or the blind optimism that says all your problems and go away tomorrow. Hope that is rooted in the future that you can choose and that you can see it and that you can build for your country. I am hopeful because I believe the Cuban people are as innovative as any people in the world." />
+        android:text="I hate these new features On #ThisPhone after the update. I hate #ThisPhoneCompany products, you'd have to torture me to get me to use #ThisPhone. The emojis in #ThisPhone are stupid. #ThisPhone is a useless, stupid waste of money. #ThisPhone is the worst phone I've ever had - ever 😠. #ThisPhone another ripoff, lost all respect SHAME. I'm worried my #ThisPhone is going to overheat like my brother's did. #ThisPhoneCompany really let me down... my new phone won't even turn on." />
 
     <Button
         android:id="@+id/analyzeButton"
