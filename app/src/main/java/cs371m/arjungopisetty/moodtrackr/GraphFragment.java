@@ -40,6 +40,8 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
 
     private PieChart mChart;
 
+    private ArrayList<Integer> colors;
+
     public GraphFragment() {
         // Required empty public constructor
     }
@@ -88,6 +90,20 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
                 mReader.fetchFromFirebase();
             }
         });
+
+        colors = new ArrayList<Integer>();
+
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+        colors.add(ColorTemplate.getHoloBlue());
     }
 
     @Override
@@ -116,7 +132,7 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
 //        entries.add(new PieEntry(30.8f, "Blue"));
 
         PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        dataSet.setColors(colors);
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(11f);
