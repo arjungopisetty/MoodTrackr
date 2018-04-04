@@ -75,6 +75,7 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
         mChart.getDescription().setEnabled(false);
         mChart.setCenterText("Moods");
         mChart.setDrawHoleEnabled(true);
+        mChart.setEntryLabelColor(Color.BLACK);
         mChart.setHoleColor(Color.WHITE);
         mChart.setTransparentCircleColor(Color.WHITE);
         mChart.setTransparentCircleAlpha(110);
@@ -136,7 +137,7 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
+        data.setValueTextColor(Color.BLACK);
         mChart.setData(data);
         mChart.invalidate();
     }
