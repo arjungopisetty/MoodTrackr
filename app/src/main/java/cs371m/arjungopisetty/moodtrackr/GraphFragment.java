@@ -18,6 +18,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -91,10 +92,13 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
 
     @Override
     public void onComplete(HashMap<String, Double> graphData) {
+        DecimalFormat decimalFormat = new DecimalFormat("#");
+        List<PieEntry> entries = new ArrayList<>();
         Iterator iterator = graphData.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry pair = (Map.Entry) iterator.next();
             Log.d(MainActivity.TAG, pair.getKey() + " = " + pair.getValue());
+            entries.add(new PieEntry(Float.parseFloat(decimalFormat.format(pair.getValue())), (String) pair.getKey()));
             iterator.remove();
         }
 
@@ -105,11 +109,11 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
 //                        records.get(i % records.size()).tones.get(j).tone_name));
 //            }
 //        }
-        List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(18.5f, "Green"));
-        entries.add(new PieEntry(26.7f, "Yellow"));
-        entries.add(new PieEntry(24.0f, "Red"));
-        entries.add(new PieEntry(30.8f, "Blue"));
+
+//        entries.add(new PieEntry(18.5f, "Green"));
+//        entries.add(new PieEntry(26.7f, "Yellow"));
+//        entries.add(new PieEntry(24.0f, "Red"));
+//        entries.add(new PieEntry(30.8f, "Blue"));
 
         PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
