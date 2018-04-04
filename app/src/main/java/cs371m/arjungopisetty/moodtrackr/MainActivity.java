@@ -1,10 +1,10 @@
 package cs371m.arjungopisetty.moodtrackr;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private Fragment analysisFragment;
-    private Fragment graphFragment;
+    private AnalysisFragment analysisFragment;
+    private GraphFragment graphFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -59,13 +59,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void switchToAnalysisFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayout, analysisFragment);
         ft.commit();
     }
 
     private void switchToGraphFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayout, graphFragment);
         ft.commit();
     }
