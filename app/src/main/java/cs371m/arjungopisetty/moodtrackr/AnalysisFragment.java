@@ -131,9 +131,10 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchTonesC
     }
 
     private void pushToFirebase(List<ToneRecord> tones) {
-        TimedToneRecord pushRecord = new TimedToneRecord();
+        FirebaseRecord pushRecord = new FirebaseRecord();
         pushRecord.tones = tones;
         pushRecord.time = new Long(System.currentTimeMillis());
+        pushRecord.journalEntry = mInputText.getText().toString();
 
         mDatabase.child("users").child(mUser.getUid()).push().setValue(pushRecord);
 

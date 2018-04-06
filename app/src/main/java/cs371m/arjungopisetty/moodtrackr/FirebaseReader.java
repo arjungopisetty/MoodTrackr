@@ -49,9 +49,9 @@ public class FirebaseReader {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<TimedToneRecord> list = new ArrayList<>();
+                List<FirebaseRecord> list = new ArrayList<>();
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                    TimedToneRecord timedToneRecord = snap.getValue(TimedToneRecord.class);
+                    FirebaseRecord timedToneRecord = snap.getValue(FirebaseRecord.class);
                     //Log.d(MainActivity.TAG, timedToneRecord.toString());
                     //List<ToneRecord> tones = timedToneRecord.tones;
                     list.add(timedToneRecord);
@@ -66,7 +66,7 @@ public class FirebaseReader {
         });
     }
 
-    public void convertToToneCategories(List<TimedToneRecord> records) {
+    public void convertToToneCategories(List<FirebaseRecord> records) {
         for (int i = 0; i < records.size(); i++) {
             List<ToneRecord> listOfTones = records.get(i).tones;
             for (int j = 0; j < listOfTones.size(); j++) {
