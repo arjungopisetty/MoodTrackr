@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        Snackbar.make(parentLayout, item.content, Snackbar.LENGTH_SHORT).show();
+    public void onListFragmentInteraction(FirebaseRecord item) {
+        Snackbar.make(parentLayout, String.valueOf(item.time), Snackbar.LENGTH_SHORT).show();
     }
 }

@@ -18,14 +18,15 @@ import java.util.List;
  */
 public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<JournalEntryRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    //private final List<DummyItem> mValues;
+    private List<FirebaseRecord> firebaseRecords;
     private final OnListFragmentInteractionListener mListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public FirebaseRecord mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -40,8 +41,8 @@ public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<Journa
         }
     }
 
-    public JournalEntryRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public JournalEntryRecyclerViewAdapter(List<FirebaseRecord> items, OnListFragmentInteractionListener listener) {
+        firebaseRecords = items;
         mListener = listener;
     }
 
@@ -54,9 +55,9 @@ public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<Journa
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mItem = firebaseRecords.get(position);
+        holder.mContentView.setText(String.valueOf(firebaseRecords.get(position).time));
+        //holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +73,17 @@ public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<Journa
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return firebaseRecords.size();
+    }
+
+    public void swap(List<FirebaseRecord> newData) {
+        if (newData == null || newData.size() == 0) {
+            return;
+        }
+        if (newData != null && newData.size() > 0) {
+            newData.clear();
+        }
+        newData.addAll(newData);
+        notifyDataSetChanged();
     }
 }

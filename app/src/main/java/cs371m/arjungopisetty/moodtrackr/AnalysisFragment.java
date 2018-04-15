@@ -40,7 +40,6 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchTonesC
 
     private String[] dummydata = {"1", "2", "3", "4"};
 
-
     public AnalysisFragment() {
         // Required empty public constructor
     }
