@@ -48,6 +48,9 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
 
     private ArrayList<Integer> colors;
 
+    private HashMap<String, Double> countsForGraph;
+    private List<String> listOfJournalEntries;
+
     public GraphFragment() {
         // Required empty public constructor
     }
@@ -128,8 +131,8 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
             }
         });
 
+        // Add colors for graph
         colors = new ArrayList<Integer>();
-
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
         for (int c : ColorTemplate.JOYFUL_COLORS)
@@ -141,13 +144,36 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
         for (int c : ColorTemplate.PASTEL_COLORS)
             colors.add(c);
         colors.add(ColorTemplate.getHoloBlue());
+
+        countsForGraph = new HashMap<>();
+    }
+
+    public void convertToStructures(List<FirebaseRecord> records) {
+        for (int i = 0; i < records.size(); i++) {
+            List<ToneRecord> listOfTones = records.get(i).tones;
+            //listOfJournalEntries.add(records.get(i).journalEntry);
+            for (int j = 0; j < listOfTones.size(); j++) {
+                ToneRecord toneRecord = listOfTones.get(j);
+                if (countsForGraph.get(toneRecord.tone_id) != null) {
+                    //Log.d(MainActivity.TAG, "Duplicate key");
+                    countsForGraph.put(toneRecord.tone_id,
+                            countsForGraph.get(toneRecord.tone_id) + toneRecord.score);
+                } else {
+                    //Log.d(MainActivity.TAG, "First key " + toneRecord.tone_id);
+                    countsForGraph.put(toneRecord.tone_id, toneRecord.score);
+                }
+            }
+        }
+
     }
 
     @Override
-    public void onComplete(HashMap<String, Double> graphData) {
+    public void onComplete(List<FirebaseRecord> records) {
+        convertToStructures(records);
+
         DecimalFormat decimalFormat = new DecimalFormat("#");
         List<PieEntry> entries = new ArrayList<>();
-        Iterator iterator = graphData.entrySet().iterator();
+        Iterator iterator = countsForGraph.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry pair = (Map.Entry) iterator.next();
             Log.d(MainActivity.TAG, pair.getKey() + " = " + pair.getValue());
@@ -191,7 +217,7 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
         Log.d(MainActivity.TAG, "Reached onDateSet");
-        String date = "You picked the following date: From- "+dayOfMonth+"/"+(++monthOfYear)+"/"+year+" To "+dayOfMonthEnd+"/"+(++monthOfYearEnd)+"/"+yearEnd;
+        String date = "You picked the following date: From- " + dayOfMonth + "/" + (++monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
         Log.d(MainActivity.TAG, date);
     }
 
@@ -205,11 +231,11 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int hourOfDayEnd, int minuteEnd) {
         Log.d(MainActivity.TAG, "Reached onTimeSet");
-        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
-        String minuteString = minute < 10 ? "0"+minute : ""+minute;
-        String hourStringEnd = hourOfDayEnd < 10 ? "0"+hourOfDayEnd : ""+hourOfDayEnd;
-        String minuteStringEnd = minuteEnd < 10 ? "0"+minuteEnd : ""+minuteEnd;
-        String time = "You picked the following time: From - "+hourString+"h"+minuteString+" To - "+hourStringEnd+"h"+minuteStringEnd;
+        String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+        String minuteString = minute < 10 ? "0" + minute : "" + minute;
+        String hourStringEnd = hourOfDayEnd < 10 ? "0" + hourOfDayEnd : "" + hourOfDayEnd;
+        String minuteStringEnd = minuteEnd < 10 ? "0" + minuteEnd : "" + minuteEnd;
+        String time = "You picked the following time: From - " + hourString + "h" + minuteString + " To - " + hourStringEnd + "h" + minuteStringEnd;
         Log.d(MainActivity.TAG, time);
     }
 }

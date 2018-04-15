@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import cs371m.arjungopisetty.moodtrackr.dummy.DummyContent;
 import cs371m.arjungopisetty.moodtrackr.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class JournalFragment extends Fragment {
+public class JournalFragment extends Fragment implements ToneParser.FetchFirebaseCallback {
 
     private OnListFragmentInteractionListener mListener;
 
@@ -74,6 +76,14 @@ public class JournalFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onComplete(List<FirebaseRecord> records) {
+        List<String> listOfJournalEntries = new ArrayList<>();
+        for (int i = 0; i < records.size(); i++) {
+            listOfJournalEntries.add(records.get(i).journalEntry);
+        }
     }
 
     /**
