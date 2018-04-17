@@ -10,6 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import cs371m.arjungopisetty.moodtrackr.dummy.DummyContent;
 
 public class MainActivity extends AppCompatActivity implements JournalFragment.OnListFragmentInteractionListener {
@@ -21,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
     private AnalysisFragment analysisFragment;
     private GraphFragment graphFragment;
     private JournalFragment journalFragment;
+
+    private DateFormat formatter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -63,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
         graphFragment = GraphFragment.newInstance();
         journalFragment = JournalFragment.newInstance();
 
+        formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US);
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+
         switchToAnalysisFragment();
     }
 
@@ -86,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
 
     @Override
     public void onListFragmentInteraction(FirebaseRecord item) {
-        Snackbar.make(parentLayout, String.valueOf(item.time), Snackbar.LENGTH_SHORT).show();
+        String text = formatter.format(new Date(item.time));
+        Snackbar.make(parentLayout, text, Snackbar.LENGTH_SHORT).show();
     }
 }

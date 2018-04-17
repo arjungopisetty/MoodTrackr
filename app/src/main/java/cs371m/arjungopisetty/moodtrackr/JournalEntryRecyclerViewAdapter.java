@@ -9,7 +9,12 @@ import android.widget.TextView;
 import cs371m.arjungopisetty.moodtrackr.JournalFragment.OnListFragmentInteractionListener;
 import cs371m.arjungopisetty.moodtrackr.dummy.DummyContent.DummyItem;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -21,6 +26,8 @@ public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<Journa
     //private final List<DummyItem> mValues;
     private List<FirebaseRecord> firebaseRecords;
     private final OnListFragmentInteractionListener mListener;
+
+    private DateFormat formatter;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
@@ -44,6 +51,9 @@ public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<Journa
     public JournalEntryRecyclerViewAdapter(List<FirebaseRecord> items, OnListFragmentInteractionListener listener) {
         firebaseRecords = items;
         mListener = listener;
+
+        formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US);
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     @Override
@@ -56,7 +66,8 @@ public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<Journa
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = firebaseRecords.get(position);
-        holder.mContentView.setText(String.valueOf(firebaseRecords.get(position).time));
+        String time = formatter.format(new Date(holder.mItem.time));
+        holder.mContentView.setText(time);
         //holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

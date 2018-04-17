@@ -61,6 +61,8 @@ public class JournalFragment extends Fragment implements ToneParser.FetchFirebas
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerViewAdapter = new JournalEntryRecyclerViewAdapter(firebaseRecords, mListener);
+            recyclerView.setAdapter(recyclerViewAdapter);
         }
         return view;
     }
@@ -93,7 +95,7 @@ public class JournalFragment extends Fragment implements ToneParser.FetchFirebas
         firebaseRecords = records;
         //recyclerViewAdapter.swap(records);
         recyclerViewAdapter = new JournalEntryRecyclerViewAdapter(firebaseRecords, mListener);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.swapAdapter(recyclerViewAdapter, false);
     }
 
     /**
