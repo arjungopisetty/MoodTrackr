@@ -93,9 +93,7 @@ public class JournalFragment extends Fragment implements ToneParser.FetchFirebas
 //        }
         Log.d(MainActivity.TAG, "OnComplete()");
         firebaseRecords = records;
-        //recyclerViewAdapter.swap(records);
-        recyclerViewAdapter = new JournalEntryRecyclerViewAdapter(firebaseRecords, mListener);
-        recyclerView.swapAdapter(recyclerViewAdapter, false);
+        recyclerViewAdapter.swap(records);
     }
 
     /**

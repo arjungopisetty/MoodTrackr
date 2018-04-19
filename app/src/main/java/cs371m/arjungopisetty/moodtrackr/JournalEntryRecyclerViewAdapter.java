@@ -92,9 +92,9 @@ public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<Journa
             return;
         }
         if (newData != null && newData.size() > 0) {
-            newData.clear();
+            firebaseRecords.clear();
         }
-        newData.addAll(newData);
+        firebaseRecords.addAll(newData);
         notifyDataSetChanged();
     }
 }
