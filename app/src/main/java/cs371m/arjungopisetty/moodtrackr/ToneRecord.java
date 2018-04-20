@@ -2,11 +2,13 @@ package cs371m.arjungopisetty.moodtrackr;
 
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneOptions;
 
+import java.io.Serializable;
+
 /**
  * Created by arjungopisetty on 3/28/18.
  */
 
-public class ToneRecord {
+public class ToneRecord implements Serializable {
     public String tone_name;
     public String tone_id;
     public double score;

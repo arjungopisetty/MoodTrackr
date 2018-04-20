@@ -1,6 +1,7 @@
 package cs371m.arjungopisetty.moodtrackr;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,8 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneOptions;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -97,7 +101,12 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
 
     @Override
     public void onListFragmentInteraction(FirebaseRecord item) {
-        String text = formatter.format(new Date(item.time));
-        Snackbar.make(parentLayout, text, Snackbar.LENGTH_SHORT).show();
+//        String text = formatter.format(new Date(item.time));
+//        Snackbar.make(parentLayout, text, Snackbar.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, JournalActivity.class);
+        intent.putExtra("journalEntry", item.journalEntry);
+        intent.putExtra("time", item.time);
+        intent.putExtra("tones", (ArrayList<ToneRecord>) item.tones);
+        startActivity(intent);
     }
 }
