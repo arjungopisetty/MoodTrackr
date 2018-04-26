@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import cs371m.arjungopisetty.moodtrackr.JournalFragment.OnListFragmentInteractionListener;
@@ -31,14 +32,14 @@ public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<Journa
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
+        public final ImageView mImageView;
         public final TextView mContentView;
         public FirebaseRecord mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
+            mImageView = (ImageView) view.findViewById(R.id.content_pic);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
@@ -69,6 +70,7 @@ public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<Journa
         String time = formatter.format(new Date(holder.mItem.time));
         holder.mContentView.setText(time);
         //holder.mContentView.setText(mValues.get(position).content);
+        holder.mImageView.setImageResource(MoodColors.colorMap.get(holder.mItem.tones.get(0).tone_id));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

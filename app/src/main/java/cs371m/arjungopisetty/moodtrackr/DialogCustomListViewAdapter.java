@@ -19,19 +19,6 @@ import java.util.HashMap;
 
 public class DialogCustomListViewAdapter extends ArrayAdapter<ToneRecord> {
 
-    private static HashMap<String, Integer> colorMap;
-
-    static {
-        colorMap = new HashMap<>();
-        colorMap.put("anger", R.drawable.red_circle);
-        colorMap.put("fear", R.drawable.orange_circle);
-        colorMap.put("joy", R.drawable.yellow_circle);
-        colorMap.put("sadness", R.drawable.green_circle);
-        colorMap.put("analytical", R.drawable.blue_circle);
-        colorMap.put("confident", R.drawable.indigo_circle);
-        colorMap.put("tentative", R.drawable.violet_circle);
-    }
-
     static class ViewHolder {
         TextView theTextView;
         TextView scoreView;
@@ -63,7 +50,7 @@ public class DialogCustomListViewAdapter extends ArrayAdapter<ToneRecord> {
         ToneRecord record = getItem(position);
         vh.theTextView.setText(record.tone_name);
         vh.scoreView.setText(String.format("%.2f", record.score));
-        vh.theImageView.setImageResource(colorMap.get(record.tone_id));
+        vh.theImageView.setImageResource(MoodColors.colorMap.get(record.tone_id));
         return convertView;
     }
 }

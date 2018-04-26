@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -107,6 +108,14 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
         intent.putExtra("journalEntry", item.journalEntry);
         intent.putExtra("time", item.time);
         intent.putExtra("tones", (ArrayList<ToneRecord>) item.tones);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "Reached onActivityResult");
+        switchToJournalFragment();
     }
 }
