@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,9 @@ import java.util.List;
 public class JournalActivity extends AppCompatActivity {
 
     public static final String TAG = JournalActivity.class.getSimpleName();
+
+    protected ListView tonesListView;
+    protected TextView journalTextView;
 
     private String journalEntry;
     private List<ToneRecord> tones;
@@ -26,15 +31,10 @@ public class JournalActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        tonesListView = findViewById(R.id.journalMoodListView);
+        journalTextView = findViewById(R.id.journalTextField);
 
 //        FirebaseRecord record = (FirebaseRecord) getIntent().getExtras().getSerializable("record");
         journalEntry = getIntent().getStringExtra("journalEntry");
@@ -42,6 +42,14 @@ public class JournalActivity extends AppCompatActivity {
         tones = (ArrayList<ToneRecord>) getIntent().getSerializableExtra("tones");
         Log.d(TAG, "Time: " + time);
         Log.d(TAG, "Journal record: " + journalEntry);
+        Log.d(TAG, "Tones" + tones);
+
+        DialogCustomListViewAdapter adapter = new DialogCustomListViewAdapter(getApplicationContext());
+        adapter.addAll(tones);
+        tonesListView.setAdapter(adapter);
+
+        journalTextView.setText(journalEntry);
     }
+
 
 }
