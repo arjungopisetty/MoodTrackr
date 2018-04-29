@@ -9,14 +9,41 @@
     tools:context=".JournalActivity"
     tools:showIn="@layout/activity_journal">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Tones: "
+        android:textStyle="bold"
+        android:textSize="24sp"/>
+
     <ListView
         android:id="@+id/journalMoodListView"
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Journal Entry: "
+        android:textStyle="bold"
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/journalTextField"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="16sp"/>
 
 </LinearLayout>

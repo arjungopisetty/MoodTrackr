@@ -17,11 +17,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<JournalEntryRecyclerViewAdapter.ViewHolder> {
 
     //private final List<DummyItem> mValues;
