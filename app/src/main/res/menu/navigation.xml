@@ -12,6 +12,11 @@
         android:title="Statistics" />
 
     <item
+        android:id="@+id/navigation_journals"
+        android:icon="@drawable/ic_library_books_black_24dp"
+        android:title="Journals" />
+
+    <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="Settings" />

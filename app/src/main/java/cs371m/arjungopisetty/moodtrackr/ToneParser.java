@@ -27,7 +27,8 @@ public class ToneParser {
     }
 
     public interface FetchFirebaseCallback {
-        void onComplete(HashMap<String, Double> graphData);
+        //void onComplete(HashMap<String, Double> graphData, List<String> journalEntries);
+        void onComplete(List<FirebaseRecord> records);
     }
 
     public static List<ToneRecord> analysisToToneRecords(ToneAnalysis analysis) {

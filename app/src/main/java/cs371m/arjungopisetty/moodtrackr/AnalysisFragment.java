@@ -40,7 +40,6 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchTonesC
 
     private String[] dummydata = {"1", "2", "3", "4"};
 
-
     public AnalysisFragment() {
         // Required empty public constructor
     }
@@ -131,9 +130,10 @@ public class AnalysisFragment extends Fragment implements ToneParser.FetchTonesC
     }
 
     private void pushToFirebase(List<ToneRecord> tones) {
-        TimedToneRecord pushRecord = new TimedToneRecord();
+        FirebaseRecord pushRecord = new FirebaseRecord();
         pushRecord.tones = tones;
         pushRecord.time = new Long(System.currentTimeMillis());
+        pushRecord.journalEntry = mInputText.getText().toString();
 
         mDatabase.child("users").child(mUser.getUid()).push().setValue(pushRecord);
 
