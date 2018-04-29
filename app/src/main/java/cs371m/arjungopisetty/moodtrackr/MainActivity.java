@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
     private AnalysisFragment analysisFragment;
     private GraphFragment graphFragment;
     private JournalFragment journalFragment;
+    private SettingsFragment settingsFragment;
 
     private DateFormat formatter;
 
@@ -54,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
                     switchToJournalFragment();
                     return true;
                 case R.id.navigation_notifications:
-                    // TODO: Insights fragment
-
+                    // TODO: Settings fragment
+                    switchToSettingsFragment();
                     return true;
             }
             return false;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
         analysisFragment = AnalysisFragment.newInstance();
         graphFragment = GraphFragment.newInstance();
         journalFragment = JournalFragment.newInstance();
+        settingsFragment = SettingsFragment.newInstance();
 
         formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US);
         formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -97,6 +99,12 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
     private void switchToJournalFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayout, journalFragment);
+        ft.commit();
+    }
+
+    private void switchToSettingsFragment() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayout, settingsFragment);
         ft.commit();
     }
 
