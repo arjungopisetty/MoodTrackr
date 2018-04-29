@@ -8,10 +8,12 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneOptions;
 
 import java.text.DateFormat;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
     private GraphFragment graphFragment;
     private JournalFragment journalFragment;
     private SettingsFragment settingsFragment;
+
+    private FirebaseAuth firebaseAuth;
 
     private DateFormat formatter;
 
@@ -78,10 +82,41 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
         journalFragment = JournalFragment.newInstance();
         settingsFragment = SettingsFragment.newInstance();
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US);
         formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         switchToAnalysisFragment();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
+            logoutOfFirebase();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logoutOfFirebase() {
+        firebaseAuth.signOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void switchToAnalysisFragment() {
