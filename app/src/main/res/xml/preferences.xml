@@ -9,7 +9,7 @@
 
         <Preference android:title="Tone Definitions" >
                 <intent android:action="android.intent.action.VIEW"
-                    android:data="http://www.example.com" />
+                    android:data="https://console.bluemix.net/docs/services/tone-analyzer/using-tone.html#tones" />
         </Preference>
 
 </PreferenceScreen>
