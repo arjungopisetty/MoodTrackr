@@ -7,4 +7,9 @@
             android:summary="Makes the note text bold"
             android:defaultValue="false" />
 
+        <Preference android:title="Tone Definitions" >
+                <intent android:action="android.intent.action.VIEW"
+                    android:data="http://www.example.com" />
+        </Preference>
+
 </PreferenceScreen>

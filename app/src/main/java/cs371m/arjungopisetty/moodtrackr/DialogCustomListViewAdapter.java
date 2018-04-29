@@ -49,7 +49,7 @@ public class DialogCustomListViewAdapter extends ArrayAdapter<ToneRecord> {
         }
         ToneRecord record = getItem(position);
         vh.theTextView.setText(record.tone_name);
-        vh.scoreView.setText(String.format("%.2f", record.score));
+        vh.scoreView.setText(String.format("%.2f", record.score * 100) + "%");
         vh.theImageView.setImageResource(MoodColors.colorMap.get(record.tone_id));
         return convertView;
     }
