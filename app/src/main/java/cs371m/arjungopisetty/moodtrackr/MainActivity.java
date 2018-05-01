@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
         firebaseAuth.signOut();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void switchToAnalysisFragment() {
