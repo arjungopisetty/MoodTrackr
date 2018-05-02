@@ -23,8 +23,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import cs371m.arjungopisetty.moodtrackr.dummy.DummyContent;
-
 public class MainActivity extends AppCompatActivity implements JournalFragment.OnListFragmentInteractionListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
