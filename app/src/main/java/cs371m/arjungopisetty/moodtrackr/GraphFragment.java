@@ -98,7 +98,7 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
         mChart.setHoleRadius(58f);
         mChart.setTransparentCircleRadius(61f);
         mChart.setDrawCenterText(true);
-        //mChart.setDrawEntryLabels(false);
+        mChart.setDrawEntryLabels(false);
 
         mReader = new FirebaseReader(this);
 
