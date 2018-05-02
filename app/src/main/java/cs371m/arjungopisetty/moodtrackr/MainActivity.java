@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private View parentLayout;
-
     private AnalysisFragment analysisFragment;
     private GraphFragment graphFragment;
     private JournalFragment journalFragment;
@@ -72,8 +70,6 @@ public class MainActivity extends AppCompatActivity implements JournalFragment.O
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        parentLayout = findViewById(android.R.id.content);
 
         analysisFragment = AnalysisFragment.newInstance();
         graphFragment = GraphFragment.newInstance();
