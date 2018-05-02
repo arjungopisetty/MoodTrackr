@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cs371m.arjungopisetty.moodtrackr.AnalysisFragment">
+
+    <EditText
+        android:id="@+id/inputText"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="top|left"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="I hate these new features On #ThisPhone after the update. I hate #ThisPhoneCompany products, you'd have to torture me to get me to use #ThisPhone. The emojis in #ThisPhone are stupid. #ThisPhone is a useless, stupid waste of money. #ThisPhone is the worst phone I've ever had - ever 😠. #ThisPhone another ripoff, lost all respect SHAME. I'm worried my #ThisPhone is going to overheat like my brother's did. #ThisPhoneCompany really let me down... my new phone won't even turn on." />
+
+    <Button
+        android:id="@+id/analyzeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Analyze" />
+
+</LinearLayout>
