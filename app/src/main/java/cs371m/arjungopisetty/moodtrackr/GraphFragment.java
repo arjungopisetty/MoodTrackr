@@ -23,8 +23,14 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,12 +42,13 @@ import java.util.Map;
  * Use the {@link GraphFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseCallback {
+public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseCallback,
+        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private FirebaseReader mReader;
 
     private View mRootView;
-    private Button mFetchButton;
+    private Button mFetchButton, mDatePickerButton, mTimePickerButton;
 
     private PieChart mChart;
 
@@ -76,6 +83,8 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mFetchButton = (Button) mRootView.findViewById(R.id.fetchButton);
+        mDatePickerButton = (Button) mRootView.findViewById(R.id.datePicker);
+        mTimePickerButton = (Button) mRootView.findViewById(R.id.timePicker);
 
         mChart = (PieChart) mRootView.findViewById(R.id.pieChart);
         mChart.setUsePercentValues(true);
@@ -89,6 +98,7 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
         mChart.setHoleRadius(58f);
         mChart.setTransparentCircleRadius(61f);
         mChart.setDrawCenterText(true);
+        //mChart.setDrawEntryLabels(false);
 
         mReader = new FirebaseReader(this);
 
@@ -96,6 +106,34 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
             @Override
             public void onClick(View view) {
                 mReader.fetchFromFirebase();
+            }
+        });
+
+        // DatePickerFragment
+        Calendar now = Calendar.getInstance();
+        final DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
+                this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        mDatePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dpd.show(getChildFragmentManager(), "Datepickerdialog");
+            }
+        });
+        // TimePickerFragment
+        final TimePickerDialog tpd = TimePickerDialog.newInstance(
+                this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                false
+        );
+        mTimePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tpd.show(getChildFragmentManager(), "Timepickerdialog");
             }
         });
 
@@ -157,5 +195,50 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
         data.setValueTextColor(Color.BLACK);
         mChart.setData(data);
         mChart.invalidate();
+    }
+
+    /**
+     * @param view           The view associated with this listener.
+     * @param year           The year that was set.
+     * @param monthOfYear    The month that was set (0-11) for compatibility
+     *                       with {@link Calendar}.
+     * @param dayOfMonth     The day of the month that was set.
+     * @param yearEnd
+     * @param monthOfYearEnd
+     * @param dayOfMonthEnd
+     */
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
+        Log.d(MainActivity.TAG, "Reached onDateSet");
+        String startDate = dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+        String endDate = dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
+        String date = "You picked the following date: From- " + dayOfMonth + "/" + (++monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
+        Log.d(MainActivity.TAG, date);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date parsedStartDate = sdf.parse(startDate);
+            long startMillis = parsedStartDate.getTime();
+            Log.d("TAG", startMillis + "");
+
+            Date parsedEndDate = sdf.parse(endDate);
+            long endMillis = parsedEndDate.getTime();
+            Log.d("TAG", endMillis + "");
+
+            mReader.fetchFromFirebase(startMillis, endMillis);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param view         The view associated with this listener.
+     * @param hourOfDay    The hour that was set.
+     * @param minute       The minute that was set.
+     * @param hourOfDayEnd
+     * @param minuteEnd
+     */
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int hourOfDayEnd, int minuteEnd) {
+
     }
 }
