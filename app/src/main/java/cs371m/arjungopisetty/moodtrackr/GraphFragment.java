@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +49,7 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
     private FirebaseReader mReader;
 
     private View mRootView;
-    private Button mFetchButton, mDatePickerButton, mTimePickerButton;
+    private FloatingActionButton mDatePickerButton;
 
     private PieChart mChart;
 
@@ -82,9 +83,9 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFetchButton = (Button) mRootView.findViewById(R.id.fetchButton);
-        mDatePickerButton = (Button) mRootView.findViewById(R.id.datePicker);
-        mTimePickerButton = (Button) mRootView.findViewById(R.id.timePicker);
+        //mFetchButton = (Button) mRootView.findViewById(R.id.fetchButton);
+        mDatePickerButton = (FloatingActionButton) mRootView.findViewById(R.id.datePicker);
+        //mTimePickerButton = (Button) mRootView.findViewById(R.id.timePicker);
 
         mChart = (PieChart) mRootView.findViewById(R.id.pieChart);
         mChart.setUsePercentValues(true);
@@ -101,13 +102,7 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
         mChart.setDrawEntryLabels(false);
 
         mReader = new FirebaseReader(this);
-
-        mFetchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mReader.fetchFromFirebase();
-            }
-        });
+        mReader.fetchFromFirebase();
 
         // DatePickerFragment
         Calendar now = Calendar.getInstance();
@@ -130,12 +125,6 @@ public class GraphFragment extends Fragment implements ToneParser.FetchFirebaseC
                 now.get(Calendar.MINUTE),
                 false
         );
-        mTimePickerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tpd.show(getChildFragmentManager(), "Timepickerdialog");
-            }
-        });
 
         // Add colors for graph
         colors = new ArrayList<Integer>();
