@@ -31,6 +31,10 @@ public class ToneParser {
         void onComplete(List<FirebaseRecord> records);
     }
 
+    public interface ClearFirebaseCallback {
+        void onClearComplete();
+    }
+
     public static List<ToneRecord> analysisToToneRecords(ToneAnalysis analysis) {
         DocumentAnalysis documentAnalysis = analysis.getDocumentTone();
         //List<ToneCategory> categories = documentAnalysis.getToneCategories();

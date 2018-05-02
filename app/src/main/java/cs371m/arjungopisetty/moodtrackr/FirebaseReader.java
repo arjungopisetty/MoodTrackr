@@ -25,9 +25,19 @@ public class FirebaseReader {
     //private List<String> listOfJournalEntries;
 
     private ToneParser.FetchFirebaseCallback mCallback;
+    private ToneParser.ClearFirebaseCallback mClearCallback;
 
     public FirebaseReader(ToneParser.FetchFirebaseCallback callback) {
         mCallback = callback;
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+    }
+
+    public FirebaseReader(ToneParser.ClearFirebaseCallback callback) {
+        mClearCallback = callback;
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -58,5 +68,10 @@ public class FirebaseReader {
                 Log.e(MainActivity.TAG, "Query cancelled");
             }
         });
+    }
+
+    public void clearFirebaseRecords() {
+        mDatabase.child("users").child(mUser.getUid()).removeValue();
+        mClearCallback.onClearComplete();
     }
 }

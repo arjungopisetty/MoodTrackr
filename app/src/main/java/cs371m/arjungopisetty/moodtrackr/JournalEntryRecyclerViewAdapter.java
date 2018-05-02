@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import cs371m.arjungopisetty.moodtrackr.JournalFragment.OnListFragmentInteractionListener;
-import cs371m.arjungopisetty.moodtrackr.dummy.DummyContent.DummyItem;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,7 +18,6 @@ import java.util.TimeZone;
 
 public class JournalEntryRecyclerViewAdapter extends RecyclerView.Adapter<JournalEntryRecyclerViewAdapter.ViewHolder> {
 
-    //private final List<DummyItem> mValues;
     private List<FirebaseRecord> firebaseRecords;
     private final OnListFragmentInteractionListener mListener;
 
