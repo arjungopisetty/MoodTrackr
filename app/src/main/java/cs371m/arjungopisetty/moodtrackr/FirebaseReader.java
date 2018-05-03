@@ -70,6 +70,31 @@ public class FirebaseReader {
         });
     }
 
+    public void fetchFromFirebase(long start, long end) {
+        Query query = mDatabase.child("users").
+                child(mUser.getUid()).
+                orderByChild("time").startAt(start).endAt(end);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<FirebaseRecord> list = new ArrayList<>();
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    FirebaseRecord firebaseRecord = snap.getValue(FirebaseRecord.class);
+                    //Log.d(MainActivity.TAG, firebaseRecord.toString());
+                    //List<ToneRecord> tones = firebaseRecord.tones;
+                    list.add(firebaseRecord);
+                }
+                mCallback.onComplete(list);
+                //convertToStructures(list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(MainActivity.TAG, "Query cancelled");
+            }
+        });
+    }
+
     public void clearFirebaseRecords() {
         mDatabase.child("users").child(mUser.getUid()).removeValue();
         mClearCallback.onClearComplete();
