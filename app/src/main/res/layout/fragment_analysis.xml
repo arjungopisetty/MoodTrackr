@@ -5,14 +5,23 @@
     android:layout_height="match_parent"
     tools:context="cs371m.arjungopisetty.moodtrackr.AnalysisFragment">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="What's on your mind?"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/inputText"
         android:layout_width="match_parent"
         android:layout_height="450dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:gravity="top|left"
         android:inputType="textMultiLine"
